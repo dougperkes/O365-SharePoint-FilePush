@@ -1,0 +1,13 @@
+﻿@model System.IO.FileSystemInfo[]
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Files to Upload to SharePoint</h2>
+
+<ul>
+    @foreach(var fileInfo in Model) {
+        <li>@Html.DisplayFor(fi => fileInfo.Name) @Html.ActionLink("Upload", "UploadFile", new { path = ViewBag.Path, docLibId = ViewBag.DocLibId, fileName = fileInfo.Name })</li>
+    }
+</ul>
+

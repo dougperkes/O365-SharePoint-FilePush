@@ -1,0 +1,21 @@
+﻿@model List<O365SharePointFilePush.Models.SearchResult>
+
+@{
+    ViewBag.Title = "Sites";
+}
+@if (ViewBag.ErrorMessage == "AuthorizationRequired")
+{
+    <p>Failed to read your sites. Click @Html.ActionLink("here", "RefreshSession", "Account", new { redirect = "Contacts" }, null) to sign-in or @Html.ActionLink("here", "ConsentApp", "Account", new { redirect = "Contacts", resource = ViewBag.ResourceId }, null) to consent the app and try again.</p>
+}
+
+<h2>Sites</h2>
+
+<ul>
+    @foreach(var item in Model) {
+        <li>
+            <h3>@Html.ActionLink(item.Title, "Libraries", new { path = item.Path })</h3>
+            <span>@Html.DisplayFor(modelItem => item.Path)</span>
+    </li>
+    }
+</ul>
+

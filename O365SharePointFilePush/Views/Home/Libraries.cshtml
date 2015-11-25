@@ -1,0 +1,38 @@
+﻿@model O365SharePointFilePush.Models.LibrariesViewModel
+
+@{
+    ViewBag.Title = "Libraries";
+}
+@if (ViewBag.ErrorMessage == "AuthorizationRequired")
+{
+    <p>Failed to read your libraries. Click @Html.ActionLink("here", "RefreshSession", "Account", new { redirect = "Contacts" }, null) to sign-in or @Html.ActionLink("here", "ConsentApp", "Account", new { redirect = "Contacts", resource = ViewBag.ResourceId }, null) to consent the app and try again.</p>
+}
+
+
+    <h2>Sub-Sites</h2>
+@if (Model.SubSites.ToList().Count > 0)
+{
+
+    <ul>
+        @foreach (var item in Model.SubSites)
+        {
+            <li>
+                <h3>@Html.ActionLink(item.Title, "Libraries", new { path = item.Url })</h3>
+                <span>@Html.DisplayFor(modelItem => item.Url)</span>
+            </li>
+        }
+    </ul>
+} else
+{
+    <h3>This site has no sub-sites</h3>
+}
+
+<h2>Document Libraries</h2>
+<ul>
+    @foreach (var item in Model.DocumentLibraries)
+    {
+        <li>
+            <h3>@Html.ActionLink(item.Title, "Upload", new { path = Request.QueryString["path"], docLibId = item.Id })</h3>
+        </li>
+    }
+</ul>
